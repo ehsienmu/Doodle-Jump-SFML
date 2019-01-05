@@ -5,6 +5,7 @@ using namespace sf;
 struct point
 {
 	int x, y;
+	double moving;
 };
 
 int main()
@@ -20,18 +21,28 @@ int main()
 	t3.loadFromFile("images/doodle.png");
 
 	Sprite sBackground(t1), sPlat(t2), sPers(t3);
-	int platNum = 20;
+	int platNum = 18;
 	point* plat = new point[platNum];
+
+	int windowHeight = 533;
+	int windowWidth = 400;
 
 	for (int i = 0; i < platNum / 2; i++) // ramdom to show 10 platforms
 	{
 		plat[i].x = rand() % 400;
 		plat[i].y = rand() % 533;
 	}
-	for (int i = 10; i < platNum; i++) // 先放一些在看不到的地方
+	for (int i = platNum / 2; i < platNum - 5; i++) // 先放一些在看不到的地方
 	{
 		plat[i].x = rand() % 400;
 		plat[i].y = -rand() % 533;
+	}
+	for (int i = platNum - 5; i < platNum; i++) // 先放一些在看不到的地方
+	{
+		plat[i].x = rand() % 400;
+		plat[i].y = 533 - rand() % (533 * 2);
+		if (plat[i].y % 2 == 0) plat[i].moving = -2 - rand() % 20/10;
+		else plat[i].moving = 2 + rand() % 20/10;
 	}
 
 	// (0, 0)是左上角
@@ -47,19 +58,19 @@ int main()
 				app.close();
 		}
 
-		dy += 0.2; // 大概是像受重力的g(大概)
+		dy += 0.3; // 大概是像受重力的g(大概)
 		y += dy;
 //		y -= 3; // 如果想要小章魚跟視窗有相對運動就是這行
 
 		if (Keyboard::isKeyPressed(Keyboard::Right)) x += 3;
 		if (Keyboard::isKeyPressed(Keyboard::Left)) x -= 3;
 
-		if (x >= 400) // when move out of left bound
-			x -= 398;
+		if (x >= windowWidth) // when move out of left bound
+			x -= (windowWidth);
 		if (x <= 0) // when move out of right bound
-			x += 398;
+			x += (windowWidth);
 
-		if (y > 500) // 死翹翹了
+		if (y > 500) // 死翹翹了 我不知道為什麼他寫500
 			dy = -20; // When player die -20 is jump upward. If +20 is falling to the hell;
 
 		if (y < h) // 小章魚與畫面的移動 限制離window bar要有個距離h
@@ -74,6 +85,13 @@ int main()
 					plat[i].x = rand() % 400;
 				}
 			}
+
+		for (int i = platNum - 5; i < platNum; i++) // 先放一些在看不到的地方
+		{
+			plat[i].x += plat[i].moving;
+			if (plat[i].x >= windowWidth || plat[i].x <= 0) // when move out of left bound
+				plat[i].moving *= (-1);
+		}
 
 		for (int i = 0; i < platNum; i++)
 			if ((x + 50 > plat[i].x) && (x + 20 < plat[i].x + 68) &&
