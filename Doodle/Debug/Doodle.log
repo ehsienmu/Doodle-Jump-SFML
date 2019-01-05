@@ -1,8 +1,8 @@
 ﻿  DoodleMain.cpp
 c:\users\asus\finalproject\doodle\doodle\src\doodlemain.cpp(12): warning C4244: '引數': 將 'time_t' 轉換為 'unsigned int'，由於類型不同，可能導致資料遺失
-c:\users\asus\finalproject\doodle\doodle\src\doodlemain.cpp(55): warning C4305: '+=': 從 'double' 轉換為 'float'，是由較大的類型轉換為較小的類型，可能導致資料遺失
-c:\users\asus\finalproject\doodle\doodle\src\doodlemain.cpp(56): warning C4244: '+=': 將 'float' 轉換為 'int'，由於類型不同，可能導致資料遺失
-c:\users\asus\finalproject\doodle\doodle\src\doodlemain.cpp(64): warning C4244: '=': 將 'float' 轉換為 'int'，由於類型不同，可能導致資料遺失
-c:\users\asus\finalproject\doodle\doodle\src\doodlemain.cpp(81): warning C4244: '引數': 將 'int' 轉換為 'float'，由於類型不同，可能導致資料遺失
-c:\users\asus\finalproject\doodle\doodle\src\doodlemain.cpp(88): warning C4244: '引數': 將 'int' 轉換為 'float'，由於類型不同，可能導致資料遺失
+c:\users\asus\finalproject\doodle\doodle\src\doodlemain.cpp(61): warning C4305: '+=': 從 'double' 轉換為 'float'，是由較大的類型轉換為較小的類型，可能導致資料遺失
+c:\users\asus\finalproject\doodle\doodle\src\doodlemain.cpp(62): warning C4244: '+=': 將 'float' 轉換為 'int'，由於類型不同，可能導致資料遺失
+c:\users\asus\finalproject\doodle\doodle\src\doodlemain.cpp(70): warning C4244: '=': 將 'float' 轉換為 'int'，由於類型不同，可能導致資料遺失
+c:\users\asus\finalproject\doodle\doodle\src\doodlemain.cpp(98): warning C4244: '引數': 將 'int' 轉換為 'float'，由於類型不同，可能導致資料遺失
+c:\users\asus\finalproject\doodle\doodle\src\doodlemain.cpp(105): warning C4244: '引數': 將 'int' 轉換為 'float'，由於類型不同，可能導致資料遺失
   Doodle.vcxproj -> C:\Users\asus\finalProject\Doodle\Debug\Doodle.exe

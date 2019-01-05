@@ -20,18 +20,22 @@ int main()
 	t3.loadFromFile("images/doodle.png");
 
 	Sprite sBackground(t1), sPlat(t2), sPers(t3);
+	int platNum = 20;
+	point* plat = new point[platNum];
 
-	point plat[20];
-
-	for (int i = 0; i < 10; i++) // ramdom to show 10 platforms(!)
+	for (int i = 0; i < platNum / 2; i++) // ramdom to show 10 platforms
 	{
 		plat[i].x = rand() % 400;
 		plat[i].y = rand() % 533;
 	}
+	for (int i = 10; i < platNum; i++) // 先放一些在看不到的地方
+	{
+		plat[i].x = rand() % 400;
+		plat[i].y = -rand() % 533;
+	}
 
-	int x = 100, y = 100, h = 200; // (x, y) initial position
-								   // h is the minimum distant you can close with (y = 0) window bar
-								   // line 60.
+	// (0, 0)是左上角
+	int x = 100, y = 100, h = 200; // (x, y) initial 章魚 position // h 是小章魚最近可以離window bar多少, 程式碼在下面if (y < h)
 	float dx = 0, dy = 0;
 
 	while (app.isOpen())
@@ -43,54 +47,56 @@ int main()
 				app.close();
 		}
 
+		dy += 0.2; // 大概是像受重力的g(大概)
+		y += dy;
+//		y -= 3; // 如果想要小章魚跟視窗有相對運動就是這行
+
 		if (Keyboard::isKeyPressed(Keyboard::Right)) x += 3;
 		if (Keyboard::isKeyPressed(Keyboard::Left)) x -= 3;
 
-
-		if (x >= 400) // when go out of left bound
+		if (x >= 400) // when move out of left bound
 			x -= 398;
-		if (x <= 0)
+		if (x <= 0) // when move out of right bound
 			x += 398;
 
-		dy += 0.2; // similar to gravity
-		y += dy;
-		if (y > 500) // y = 500 is the lower bound
+		if (y > 500) // 死翹翹了
 			dy = -20; // When player die -20 is jump upward. If +20 is falling to the hell;
 
-		if (y < h) // moving sight
-			for (int i = 0; i < 10; i++) // to create platform when needing
+		if (y < h) // 小章魚與畫面的移動 限制離window bar要有個距離h
+			for (int i = 0; i < platNum; i++) // to create platform when needing
 			{
 				y = h;
 				plat[i].y = plat[i].y - dy;
-				if (plat[i].y > 533)
+				if (plat[i].y > 533)//533是下界
 				{
-					plat[i].y = 0;
+//					plat[i].y = 0; //這原本作者寫的
+					plat[i].y = -(rand() % 533);
 					plat[i].x = rand() % 400;
 				}
 			}
 
-		for (int i = 0; i < 10; i++)
-		{
+		for (int i = 0; i < platNum; i++)
 			if ((x + 50 > plat[i].x) && (x + 20 < plat[i].x + 68) &&
 				(y + 70 > plat[i].y) && (y + 70 < plat[i].y + 14) && (dy > 0))
 			{
 				dy = -10; // when you collide with platform, you will jump!
 			}
-		}
+
+		// 讓平台會像小朋友下樓梯
+		for (int i = 0; i < platNum; i++)
+			plat[i].y += 3;
 
 		sPers.setPosition(x, y);
 
 		app.draw(sBackground);
 		app.draw(sPers);
-		for (int i = 0; i < 10; i++) //what is here does??????
+		for (int i = 0; i < platNum; i++)
 		{
-			std::printf("hi");
 			sPlat.setPosition(plat[i].x, plat[i].y);
-			app.draw(sPlat);
+			app.draw(sPlat);	
 		}
 
 		app.display();
 	}
-
 	return 0;
 }
